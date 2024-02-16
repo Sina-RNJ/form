@@ -1,0 +1,100 @@
+<html>
+<head>
+  <style>
+    /* Add some styles for the form elements */
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px;
+    }
+
+    input, button {
+      width: 300px;
+      padding: 10px;
+      margin: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <form id="myForm">
+    <h1>Sign Up Form</h1>
+    <input type="text" id="name" name="name" placeholder="Enter your name">
+    <input type="email" id="email" name="email" placeholder="Enter your email">
+    <input type="password" id="password" name="password" placeholder="Enter your password">
+    <button type="submit">Submit</button>
+    <p id="errorText"></p>
+  </form>
+  <script>
+    // Get the form element and the input fields
+    let form = document.getElementById("myForm");
+    let nameField = document.getElementById("name");
+    let emailField = document.getElementById("email");
+    let passwordField = document.getElementById("password");
+    let errorText = document.getElementById("errorText");
+
+    // Add a submit event listener to the form
+    form.addEventListener("submit", function(event) {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+
+      // Get the values of the input fields
+      let name = nameField.value;
+      let email = emailField.value;
+      let password = passwordField.value;
+
+      // Define some validation rules for the input fields
+      let nameRegex = /^[A-Za-z ]+$/; // Only allow letters and spaces
+      let emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/; // A valid email format
+      let passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{10,}$/; // At least 10 characters, one uppercase, one number, one special character
+
+      // Check if the input fields match the validation rules
+      if (!name.match(nameRegex)) {
+        // If the name is invalid, show an error message and add a red border to the input field
+        nameField.classList.add("error");
+        errorText.innerHTML = "Name field should only contain letters and spaces";
+        return;
+      } else if (!email.match(emailRegex)) {
+        // If the email is invalid, show an error message and add a red border to the input field
+        emailField.classList.add("error");
+        errorText.innerHTML = "Email field should have a valid format";
+        return;
+      } else if (!password.match(passwordRegex)) {
+        // If the password is invalid, show an error message and add a red border to the input field
+        passwordField.classList.add("error");
+        errorText.innerHTML = "Password field should have at least 10 characters, one uppercase, one number, and one special character";
+        return;
+      }
+
+      // If all the input fields are valid, remove any error messages and borders
+      if (nameField.classList.contains("error")) {
+        nameField.classList.remove("error");
+      }
+      if (emailField.classList.contains("error")) {
+        emailField.classList.remove("error");
+      }
+      if (passwordField.classList.contains("error")) {
+        passwordField.classList.remove("error");
+      }
+      errorText.innerHTML = "";
+
+      // Do something with the form data, such as sending it to a server or storing it in a database
+      // For this example, we'll just show an alert message
+      alert("Form submitted successfully!");
+    });
+  </script>
+</body>
+</html>
